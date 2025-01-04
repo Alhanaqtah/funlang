@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 
-	"lang/internal/lexer"
-	"lang/internal/token"
+	"funlang/internal/lexer"
+	"funlang/internal/token"
 )
 
 const prompt = "\033[1;36m➜ \033[0m"

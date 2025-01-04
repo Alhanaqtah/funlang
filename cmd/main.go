@@ -1,7 +1,7 @@
 package main
 
 import (
-	repl "lang/internal/prompt"
+	repl "funlang/internal/prompt"
 	"os"
 )
 

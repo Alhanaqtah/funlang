@@ -3,8 +3,8 @@ package lexer_test
 import (
 	"testing"
 
-	"lang/internal/lexer"
-	"lang/internal/token"
+	"funlang/internal/lexer"
+	"funlang/internal/token"
 )
 
 func TestNext(t *testing.T) {

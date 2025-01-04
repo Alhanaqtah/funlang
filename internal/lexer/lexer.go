@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"lang/internal/token"
+	"funlang/internal/token"
 	"unicode"
 )
 
