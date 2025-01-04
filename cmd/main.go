@@ -1,8 +1,9 @@
 package main
 
 import (
-	repl "funlang/internal/prompt"
 	"os"
+
+	"funlang/internal/repl"
 )
 
 func main() {
