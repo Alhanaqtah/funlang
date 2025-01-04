@@ -9,7 +9,7 @@ import (
 	"lang/internal/token"
 )
 
-const prompt = "➜ "
+const prompt = "\033[1;36m➜ \033[0m"
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)

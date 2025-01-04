@@ -2,18 +2,19 @@ package lexer
 
 import (
 	"lang/internal/token"
+	"unicode"
 )
 
 type Lexer struct {
-	input   string
+	input   []rune
 	pos     int  // pointer to current charecter in input
 	readPos int  // pointer to charecter readind in input
-	ch      byte // current charecter
+	ch      rune // current charecter
 }
 
 func New(input string) *Lexer {
 	l := &Lexer{
-		input: input,
+		input: []rune(input),
 	}
 
 	l.readChar()
@@ -71,13 +72,13 @@ func (l *Lexer) Next() token.Token {
 		tok.Type = token.EOF
 		tok.Literal = ""
 	default:
-		if isLetter(l.ch) {
-			tok.Literal = l.readIdentifier()
+		if unicode.IsLetter(l.ch) {
+			tok.Literal = string(l.readIdentifier())
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
-		} else if isDigit(l.ch) {
+		} else if unicode.IsDigit(l.ch) {
 			tok.Type = token.INT
-			tok.Literal = l.readNumber()
+			tok.Literal = string(l.readNumber())
 			return tok
 		} else {
 			tok = token.New(token.ILLEGAL, string(l.ch))
@@ -101,12 +102,12 @@ func (l *Lexer) readChar() {
 }
 
 func (l *Lexer) skipWhitespace() {
-	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+	for unicode.IsSpace(l.ch) {
 		l.readChar()
 	}
 }
 
-func (l *Lexer) peekChar() byte {
+func (l *Lexer) peekChar() rune {
 	if l.readPos >= len(l.input) {
 		return 0
 	} else {
@@ -114,30 +115,22 @@ func (l *Lexer) peekChar() byte {
 	}
 }
 
-func (l *Lexer) readIdentifier() string {
+func (l *Lexer) readIdentifier() []rune {
 	pos := l.pos
 
-	for isLetter(l.ch) {
+	for unicode.IsLetter(l.ch) || l.ch == '_' {
 		l.readChar()
 	}
 
 	return l.input[pos:l.pos]
 }
 
-func (l *Lexer) readNumber() string {
+func (l *Lexer) readNumber() []rune {
 	pos := l.pos
 
-	for isDigit(l.ch) {
+	for unicode.IsDigit(l.ch) {
 		l.readChar()
 	}
 
 	return l.input[pos:l.pos]
-}
-
-func isLetter(ch byte) bool {
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
-}
-
-func isDigit(ch byte) bool {
-	return '0' <= ch && ch <= '9'
 }
