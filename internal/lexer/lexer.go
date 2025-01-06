@@ -1,8 +1,9 @@
 package lexer
 
 import (
-	"funlang/internal/token"
 	"unicode"
+
+	"funlang/internal/token"
 )
 
 type Lexer struct {
